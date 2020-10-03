@@ -7,6 +7,7 @@ class LoadingScreen extends StatefulWidget {
 }
 
 class _LoadingScreenState extends State<LoadingScreen> {
+  Position position;
   void getLocation() async {
     LocationPermission permission = await requestPermission();
 
@@ -14,22 +15,34 @@ class _LoadingScreenState extends State<LoadingScreen> {
         permission == LocationPermission.deniedForever) {
       await openAppSettings();
     }
-    Position position = await getCurrentPosition(
+    Position pos = await getCurrentPosition(
       desiredAccuracy: LocationAccuracy.high,
     );
+    setState(() {
+      position = pos;
+    });
     print(position);
+  } //getLocation
+
+  @override
+  void initState() {
+    super.initState();
+    getLocation();
   }
 
   @override
   Widget build(BuildContext context) {
+    double lat = position.latitude;
+    double long = position.longitude;
     return Scaffold(
       body: Center(
-        child: RaisedButton(
-          onPressed: () {
-            //Get the current location
-            getLocation();
-          },
-          child: Text('Get Location'),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text('LOCATION:'),
+            Text('Lat: $lat'),
+            Text('Lon: $long'),
+          ],
         ),
       ),
     );
