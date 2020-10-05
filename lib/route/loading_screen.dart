@@ -7,8 +7,8 @@ class LoadingScreen extends StatefulWidget {
 }
 
 class _LoadingScreenState extends State<LoadingScreen> {
-  Location location = Location();
-
+  double latitude;
+  double longitude;
   @override
   void initState() {
     super.initState();
@@ -16,21 +16,24 @@ class _LoadingScreenState extends State<LoadingScreen> {
   }
 
   void getLocation() async {
+    Location location = Location();
     await location.getCurrentLocation();
+    setState(() {
+      latitude = location.latitude;
+      longitude = location.longitude;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    double lat = location.latitude;
-    double long = location.longitude;
     return Scaffold(
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text('LOCATION:'),
-            Text('Lat: $lat'),
-            Text('Lon: $long'),
+            Text('Lat: $latitude'),
+            Text('Lon: $longitude'),
           ],
         ),
       ),

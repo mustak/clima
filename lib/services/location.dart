@@ -23,12 +23,9 @@ class Location {
 
   Future<bool> _accessDenied() async {
     LocationPermission permission = await requestPermission();
-    if (permission == LocationPermission.denied ||
-        permission == LocationPermission.deniedForever) {
-      return true;
-      //await openAppSettings();
-    } else {
-      return false;
-    }
+    return (permission == LocationPermission.denied ||
+            permission == LocationPermission.deniedForever)
+        ? true
+        : false;
   }
 }
