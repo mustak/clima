@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import 'package:clima_app/services/location.dart';
-import 'dart:convert';
+import 'package:clima_app/services/networking.dart';
+
+const kApiKey = '8241265326e532a17ab704c251b0c421';
 
 class LoadingScreen extends StatefulWidget {
   @override
@@ -12,43 +13,37 @@ class _LoadingScreenState extends State<LoadingScreen> {
   double latitude;
   double longitude;
   String city;
+
   @override
   void initState() {
     super.initState();
-    getLocation();
+    getLocationData();
   }
 
-  void getLocation() async {
+  void getLocationData() async {
     Location location = Location();
     await location.getCurrentLocation();
+
+    latitude = location.latitude;
+    longitude = location.longitude;
+
+    //getData();
+    String url =
+        'https://api.openweathermap.org/data/2.5/weather?lat=$latitude&lon=$longitude&appid=$kApiKey';
+    NetworkHelper networkHelper = NetworkHelper(url);
+
+    var weatherData = await networkHelper.getData();
     setState(() {
-      latitude = location.latitude;
-      longitude = location.longitude;
-    });
-  }
-
-  void getData() async {
-    http.Response response = await http.get(
-        'https://samples.openweathermap.org/data/2.5/weather?q=London,uk&appid=439d4b804bc8187953eb36d2a8c26a02');
-
-    if (response.statusCode == 200) {
-      String data = response.body;
-
-      var weatherData = jsonDecode(data);
-
       city = weatherData['name'];
-      double temp = weatherData['main']['temp'];
-      int condition = weatherData['weather'][0]['id'];
-      print(condition);
-    } else {
-      print(response.statusCode);
-      // throw Exception('Failed to load weather data');
-    }
+    });
+
+    double temp = weatherData['main']['temp'];
+    int condition = weatherData['weather'][0]['id'];
+    print(city);
   }
 
   @override
   Widget build(BuildContext context) {
-    getData();
     return Scaffold(
       body: Center(
         child: Column(
