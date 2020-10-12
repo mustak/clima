@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:clima_app/services/location.dart';
 import 'package:clima_app/services/networking.dart';
+import 'package:clima_app/route/location.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 const kApiKey = '8241265326e532a17ab704c251b0c421';
 
@@ -39,21 +42,30 @@ class _LoadingScreenState extends State<LoadingScreen> {
 
     double temp = weatherData['main']['temp'];
     int condition = weatherData['weather'][0]['id'];
-    print(city);
+    // print(city);
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) {
+        return LocationScreen();
+      }),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text('LOCATION:'),
-            Text('Lat: $latitude'),
-            Text('Lon: $longitude'),
-            Text('City: $city'),
-          ],
+        child: SpinKitFadingCircle(
+          itemBuilder: (BuildContext context, int index) {
+            // print(index);
+            return DecoratedBox(
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: index.isEven ? Colors.amber[700] : Colors.amber[200],
+              ),
+            );
+          },
         ),
       ),
     );
