@@ -13,10 +13,11 @@ class LocationScreen extends StatefulWidget {
 
 class _LocationScreenState extends State<LocationScreen> {
   WeatherModel _weatherModel = WeatherModel();
-  int _temp;
-  String _city;
+  String _temp;
+  // String _city;
   String _weatherIcon;
   String _weatherMessage;
+  bool _updating = true;
 
   @override
   void initState() {
@@ -26,13 +27,23 @@ class _LocationScreenState extends State<LocationScreen> {
   }
 
   void updateUI(dynamic weatherData) {
-    double temp = weatherData['main']['temp'];
+    // weatherData = null;
     setState(() {
-      _temp = temp.floor();
+      if (weatherData == null) {
+        _temp = ' ';
+        _weatherIcon = ' ';
+        _weatherMessage = 'Error occured.';
+        _updating = false;
+        return;
+      }
+      double temp = weatherData['main']['temp'];
+      int t = temp.floor();
+      _temp = '${t.toString()}°';
       int _condition = weatherData['weather'][0]['id'];
-      _city = weatherData['name'];
+      String _city = weatherData['name'];
       _weatherIcon = _weatherModel.getWeatherIcon(_condition);
-      _weatherMessage = _weatherModel.getMessage(_temp);
+      _weatherMessage = '${_weatherModel.getMessage(t)} in $_city';
+      _updating = false;
     });
   }
 
@@ -59,40 +70,51 @@ class _LocationScreenState extends State<LocationScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   FlatButton(
-                    onPressed: () {},
+                    onPressed: () async {
+                      setState(() {
+                        _updating = true;
+                      });
+                      var weatherData =
+                          await WeatherModel().getLocationWeather();
+                      updateUI(weatherData);
+                    },
                     child: Icon(
-                      Icons.near_me,
-                      size: 50.0,
+                      Icons.location_searching, //Icons.near_me,
+                      size: 40.0,
                     ),
                   ),
                   FlatButton(
                     onPressed: () {},
                     child: Icon(
                       Icons.location_city,
-                      size: 50.0,
+                      size: 40.0,
                     ),
                   ),
                 ],
               ),
-              Padding(
-                padding: EdgeInsets.only(left: 15.0),
-                child: Row(
-                  children: <Widget>[
-                    Text(
-                      '$_temp°',
-                      style: kTempTextStyle,
+              (_updating)
+                  ? CircularProgressIndicator(
+                      value: null,
+                    )
+                  : Padding(
+                      padding: EdgeInsets.only(left: 15.0),
+                      child: Row(
+                        children: <Widget>[
+                          Text(
+                            '$_temp',
+                            style: kTempTextStyle,
+                          ),
+                          Text(
+                            _weatherIcon,
+                            style: kConditionTextStyle,
+                          ),
+                        ],
+                      ),
                     ),
-                    Text(
-                      _weatherIcon,
-                      style: kConditionTextStyle,
-                    ),
-                  ],
-                ),
-              ),
               Padding(
                 padding: EdgeInsets.only(right: 15.0),
                 child: Text(
-                  '$_weatherMessage in $_city',
+                  '$_weatherMessage',
                   textAlign: TextAlign.right,
                   style: kMessageTextStyle,
                 ),
