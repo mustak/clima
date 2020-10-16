@@ -13,6 +13,7 @@ const kMessageTextStyle = TextStyle(
 const kButtonTextStyle = TextStyle(
   fontSize: 30.0,
   fontFamily: 'Spartan MB',
+  letterSpacing: 1.5,
 );
 
 const kConditionTextStyle = TextStyle(
