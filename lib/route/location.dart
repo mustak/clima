@@ -79,14 +79,14 @@ class _LocationScreenState extends State<LocationScreen> {
                       updateUI(weatherData);
                     },
                     child: Icon(
-                      Icons.location_searching, //Icons.near_me,
+                      Icons.gps_fixed, //Icons.near_me,
                       size: 40.0,
                     ),
                   ),
                   FlatButton(
                     onPressed: () {},
                     child: Icon(
-                      Icons.location_city,
+                      Icons.input,
                       size: 40.0,
                     ),
                   ),
