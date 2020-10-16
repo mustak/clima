@@ -21,6 +21,9 @@ class _CityScreenState extends State<CityScreen> {
         child: SafeArea(
           child: Column(
             children: <Widget>[
+              SizedBox(
+                height: 40,
+              ),
               Align(
                 alignment: Alignment.topLeft,
                 child: FlatButton(

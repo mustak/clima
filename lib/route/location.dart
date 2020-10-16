@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:clima_app/utilities/constants.dart';
 import 'package:clima_app/services/weather.dart';
+import 'package:clima_app/route/city_screen.dart';
 
 class LocationScreen extends StatefulWidget {
   final dynamic weatherData;
@@ -84,7 +85,14 @@ class _LocationScreenState extends State<LocationScreen> {
                     ),
                   ),
                   FlatButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) {
+                          return CityScreen();
+                        }),
+                      );
+                    },
                     child: Icon(
                       Icons.input,
                       size: 40.0,

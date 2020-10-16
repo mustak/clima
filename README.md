@@ -17,4 +17,7 @@ samples, guidance on mobile development, and a full API reference.
 
 ## Resources
 
-Photo by [Aurélien Lemasson-Théobald](https://unsplash.com/@aurel__lens?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText) on [Unsplash](https://unsplash.com/s/photos/weather?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText)
+### Photos
+[Aurélien Lemasson-Théobald](https://unsplash.com/@aurel__lens?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText) on [Unsplash](https://unsplash.com/s/photos/weather?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText).
+
+[Brayden Law](https://unsplash.com/@braydenlaw?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText) on [Unsplash](https://unsplash.com/s/photos/city-background?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText).
