@@ -5,12 +5,17 @@ const kApiKey = '8241265326e532a17ab704c251b0c421';
 const weatherUrl = 'https://api.openweathermap.org/data/2.5/weather';
 
 class WeatherModel {
-  Future<dynamic> getLocationWeather() async {
+  Future<dynamic> getLocationWeather({cityName}) async {
+    String url;
     Location location = Location();
     await location.getCurrentLocation();
 
-    String url =
-        '$weatherUrl?lat=${location.latitude}&lon=${location.longitude}&units=metric&appid=$kApiKey';
+    if (cityName == null) {
+      url =
+          '$weatherUrl?lat=${location.latitude}&lon=${location.longitude}&units=metric&appid=$kApiKey';
+    } else {
+      url = '$weatherUrl?q=$cityName&units=metric&appid=$kApiKey';
+    }
     NetworkHelper networkHelper = NetworkHelper(url);
 
     var weatherData = await networkHelper.getData();

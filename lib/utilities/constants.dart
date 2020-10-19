@@ -30,11 +30,11 @@ const kTextFieldInputDecoration = InputDecoration(
   ),
   fillColor: Colors.white,
   filled: true,
-  icon: Icon(
-    Icons.input,
-    color: Colors.white,
-    size: 35,
-  ),
+  // icon: Icon(
+  //   Icons.input,
+  //   color: Colors.white,
+  //   size: 35,
+  // ),
   border: OutlineInputBorder(
     borderSide: BorderSide(width: 0, style: BorderStyle.none),
     borderRadius: BorderRadius.all(
